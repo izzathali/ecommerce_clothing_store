@@ -1,0 +1,72 @@
+﻿@using Ecommerce.Model
+@model OrderM
+
+@{
+    ViewData["Title"] = "Order Completed";
+}
+
+
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a asp-area="" asp-controller="Home" asp-action="ShoppingCart" class="stext-109 cl8 hov-cl1 trans-04">
+            <h5> Home </h5>
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        <h5 style="margin-left:5px;margin-right:5px;"> / </h5>
+        <a asp-area="" asp-controller="Home" asp-action="ShoppingCart">
+            <span class="stext-109 cl4">
+                <h5> Complete Order</h5>
+            </span>
+        </a>
+    </div>
+</div>
+
+
+
+<div  class="bg0 p-t-75 p-b-85">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+
+                <div class="bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+                    <div>
+                        <div class="how-pos4-parent txt-center p-b-30">
+                            <i class="fa fa-check-circle fa-5x" style="color:green;" ></i>
+                        </div>
+
+                        <h4 class="mtext-105 cl2 txt-center p-b-30">
+                            Your Order is Completed!
+                        </h4>
+
+                       
+                        <div class="m-b-20 how-pos4-parent text-center">
+                            <label class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="Text" >
+                                Your order #@Model.OrderId has been completed. Your order details are shown for your personal accont.
+                            </label>
+                           
+                        </div>
+
+                        <a asp-area="" asp-controller="Home" asp-action="Shop" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                            Back to Shop
+                        </a>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

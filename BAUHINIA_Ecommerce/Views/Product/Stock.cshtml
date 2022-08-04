@@ -1,0 +1,105 @@
+﻿@using Ecommerce.Model
+@model IEnumerable<ProductM>
+
+@{
+    ViewData["Title"] = "Product Availability";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product Availability /</span> Report</h4>
+
+        <!-- Basic Bootstrap Table -->
+        <div class="card">
+            <h5 class="card-header">List of Product Availability</h5>
+            <div class="table-responsive text-nowrap">
+                <table id="sortstock" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" >
+                                @Html.DisplayNameFor(model => model.ProductCode)
+                            </th>
+                            <th scope="col" >
+                                @Html.DisplayNameFor(model => model.ProductName)
+                            </th>
+                            <th scope="col" >
+                                @Html.DisplayNameFor(model => model.ProductDescription)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.category)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.ProductPrice)
+                            </th>
+                            <th scope="col">
+                                Stock In (Qty)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.ProductPicUrl)
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-table-header="ProductCode" >
+                                    @Html.DisplayFor(modelItem => item.ProductCode)
+                                </td>
+                                <td data-table-header="ProductName" >
+                                    @Html.DisplayFor(modelItem => item.ProductName)
+                                </td>
+                                <td data-table-header="ProductDescription" >
+                                    @Html.DisplayFor(modelItem => item.ProductDescription)
+                                </td>
+                                <td data-table-header="CategoryName" > 
+                                    @Html.DisplayFor(modelItem => item.category.CategoryName)
+                                </td>
+                                <td data-table-header="ProductPrice" >
+                                    @Html.DisplayFor(modelItem => item.ProductPrice)
+                                </td>
+                                <td data-table-header="Quantity" class="text-center" style="font-weight:bold;">
+                                    @if (item.Quantity <= 10)
+                                    {
+                                        <div style="color:red">
+
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div style="color:forestgreen">
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </div>
+                                    }
+                                </td>
+                                <td data-table-header="ProductPicUrl" >
+                                    <div class="avatar">
+                                        @if (string.IsNullOrEmpty(item.ProductPicUrl))
+                                        {
+                                            <img src="@("~/ProductImg/default.jpg")" asp-append-version="true" alt="Avatar" class="rounded-circle" />
+                                        }
+                                        else
+                                        {
+                                            <img src="@("~/ProductImg/"+ item.ProductPicUrl)" asp-append-version="true" alt="Avatar" class="rounded-circle" />
+                                        }
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,82 @@
+﻿@using Ecommerce.Model
+@model CategoryM
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Category/</span> Delete</h4>
+
+        <!-- Basic Layout -->
+        <div class="row">
+            <div class="col-xl">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Are you sure you want to delete this? </h5>
+                        <small class="text-muted float-end">Delete</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                @Html.DisplayNameFor(model => model.CategoryName)
+                            </div>
+                            <div class="col-md-8">
+                                @Html.DisplayFor(model => model.CategoryName)
+                            </div>
+
+                        </div>
+                        <div class="">
+                        </div>
+
+                        <form asp-action="Delete">
+
+                            <input type="hidden" asp-for="CategoryId" />
+                            <button id="showToastPlacement" type="submit" class="btn btn-danger">
+                                <span class="tf-icons bx bx-trash"></span>&nbsp; Delete
+                            </button>
+
+                            <button asp-action="Index" formnovalidate class="btn btn-secondary">
+                                <span class="tf-icons bx bx-list-ul"></span>&nbsp; View List
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div style="display:none;" class="row gx-3 gy-2 align-items-center">
+
+    <select id="selectTypeOpt" class="form-select color-dropdown">
+        <option value="bg-success">Success</option>
+    </select>
+    <select class="form-select placement-dropdown" id="selectPlacement">
+        <option value="top-0 end-0">Top right</option>
+    </select>
+</div>
+<!-- Toast with Placements -->
+<div class="bs-toast toast toast-placement-ex m-2"
+     role="alert"
+     aria-live="assertive"
+     aria-atomic="true"
+     data-delay="1000">
+    <div class="toast-header">
+        <i class="bx bx-bell me-2"></i>
+        <div class="me-auto fw-semibold">Success</div>
+        <small>11 mins ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">New Record Successfully Deleted.</div>
+</div>
+<!-- Toast with Placements -->

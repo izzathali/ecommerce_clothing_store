@@ -1,0 +1,140 @@
+﻿@using Ecommerce.Model
+@using Ecommerce.ViewModel
+
+@model CustomerM
+
+@{
+    List<ShoppingCartVM> shoppingCartModels = ViewBag.shoppingCarts as List<ShoppingCartVM>;
+
+
+    decimal TotalAmount = 0;
+}
+
+<script>
+
+    function Cart() {
+        //alert(itemId);
+        $j.ajax({
+            url: "@Url.Action("/Home/CustomerViewComponent")",
+            method: "GET",
+            success: function() {
+                $j("#myComponentContainer").html();
+            }
+        });
+    };
+
+</script>
+
+<div id="myComponentContainer" class="flex-c-m h-full p-l-18 p-r-25 bor5">
+
+    <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11">
+
+        @if (@Model == null || string.IsNullOrEmpty(@Model.CustomerName))
+        {
+
+            <a asp-area="" asp-controller="Customer" asp-action="Login">
+                <span class="stext-109 cl4" style="font-size:16px">
+                    Login
+                </span>
+            </a>
+        }
+        else if (!string.IsNullOrEmpty(@Model.CustomerName))
+        {
+
+            <div class="dropdown show">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="fa fa-user" style="color:#7582e2;">
+                        <span class="stext-109 cl4" style="font-size:16px;color:#7582e2;">
+                            @Model.CustomerName
+                        </span>
+                    </span>
+                </a>
+
+                <div class="dropdown-menu mt-2" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" asp-area="" asp-controller="Customer" asp-action="Login">
+                        <i class="fa fa-sign-out me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
+
+    @*<a onclick="Cart() ">*@
+    <a asp-area="" asp-controller="Home" asp-action="ShoppingCart">
+        @*<div id="cartItem" class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 p-l-10 icon-header-noti" data-notify="0" >*@
+        <div id="cartItem" class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 p-l-10" >
+            <i class="flex-c-m zmdi zmdi-shopping-cart">
+                <div style="font-size:15px;">(<span id="CartCount">@shoppingCartModels.Count().ToString()</span>)</div>
+            </i> 
+        </div>
+    </a>
+</div>
+
+<!-- Cart -->
+<div class="wrap-header-cart js-panel-cart">
+    <div class="s-full js-hide-cart"></div>
+
+    <div class="header-cart flex-col-l p-l-65 p-r-25">
+        <div class="header-cart-title flex-w flex-sb-m p-b-8">
+            <span class="mtext-103 cl2">
+                Your Cart
+            </span>
+
+            <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+                <i class="zmdi zmdi-close"></i>
+            </div>
+        </div>
+
+        <div class="header-cart-content flex-w js-pscroll">
+            <ul class="header-cart-wrapitem w-full">
+
+                @if (shoppingCartModels != null)
+                {
+
+                    @foreach (var item in @shoppingCartModels)
+                    {
+                        <li class="header-cart-item flex-w flex-t m-b-12">
+                            <div class="header-cart-item-img">
+                                <img src="@Url.Content("~/ProductImg/"+@item.ImagePath)" alt="IMG">
+                            </div>
+
+                            <div class="header-cart-item-txt p-t-8">
+                                <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                                    @item.ProductName
+                                </a>
+
+                                <span class="header-cart-item-info">
+                                    @item.Quantity x Rs. @item.UnitPrice
+                                </span>
+                            </div>
+                        </li>
+                        TotalAmount += item.Total;
+                    }
+                }
+
+
+            </ul>
+
+            <div class="w-full">
+                <div class="header-cart-total w-full p-tb-40">
+                    Total: Rs.@TotalAmount
+                </div>
+
+                <div class="header-cart-buttons flex-w w-full">
+                    <a asp-action="ShoppingCart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        View Cart
+                    </a>
+
+                    <a asp-action="Checkout" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        Check Out
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

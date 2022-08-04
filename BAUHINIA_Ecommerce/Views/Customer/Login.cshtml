@@ -1,0 +1,160 @@
+﻿@using Ecommerce.Model
+@using Ecommerce.ViewModel
+@model CustomerM
+
+@{
+    ViewData["Title"] = "Login";
+    List<ShoppingCartVM> shoppingCarts = ViewBag.shoppingCarts as List<ShoppingCartVM>;
+
+    decimal TotalAmount = 0;
+
+    string InvalidUser = ViewBag.InvalidLogin;
+}
+
+
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a asp-area="" asp-controller="Customer" asp-action="Login" class="stext-109 cl8 hov-cl1 trans-04">
+            <h5> Customer </h5>
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        <h5 style="margin-left:5px;margin-right:5px;"> / </h5>
+        <a asp-area="" asp-controller="Customer" asp-action="Login">
+            <span class="stext-109 cl4">
+                <h5> Sign-In </h5>
+            </span>
+        </a>
+    </div>
+</div>
+
+
+<form asp-action="Login" class="bg0 p-t-75 p-b-85">
+    <div class="container">
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+
+                <div class="bor10 p-lr-120 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+                    <div>
+                        <h4 class="mtext-105 cl2 txt-center p-b-40">
+                            User Sign-In
+                        </h4>
+                        @if (!string.IsNullOrEmpty(@InvalidUser))
+                        {
+                            <div class="m-t-0 m-b-0 how-pos4-parent">
+                                <label class="control-label text-danger text-center"> @InvalidUser </label>
+                            </div>
+                        }
+                        @*   <label asp-for="Email" class="control-label"></label>*@
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <div class="bor8 m-b-20 how-pos4-parent">
+                            <input asp-for="Email" class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" placeholder="Your Email Address" />
+                            <i class="how-pos4 pointer-none fa fa-envelope fa-4" aria-hidden="true"></i>
+
+                        </div>
+
+                        @*        <label asp-for="Password" class="control-label"></label>*@
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <div class="bor8 m-b-20 how-pos4-parent">
+                            <input asp-for="Password" class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="password" placeholder="Password" />
+                            <i class="how-pos4 pointer-none fa fa-unlock-alt fa-4" aria-hidden="true"></i>
+                        </div>
+
+                        <input type="submit" value="Sign-In" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" />
+
+                        <div class="m-t-20 m-b-20 how-pos4-parent">
+                            <label class="control-label text-center"> Not a member? <a asp-area="" asp-controller="Customer" asp-action="Create">Register</a></label>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+
+                <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+                    <h4 class="mtext-109 cl2 p-b-30">
+                        Carts (@shoppingCarts.Count)
+                    </h4>
+
+                    <div class="">
+
+
+                        <div class="cart flex-col-l p-l-25 p-r-25">
+                            <div class="header-cart-content flex-w">
+                                <ul class="header-cart-wrapitem ">
+
+                                    @if (shoppingCarts != null)
+                                    {
+                                        @foreach (var item in shoppingCarts)
+                                        {
+                                            <li class="header-cart-item flex-w flex-t m-b-12">
+                                                <div class="header-cart-item-img">
+                                                    <img src="@Url.Content("~/ProductImg/"+@item.ImagePath)" alt="IMG">
+                                                </div>
+
+                                                <div class="header-cart-item-txt p-t-8">
+                                                    <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                                                        @item.ProductName
+                                                    </a>
+
+                                                    <span class="header-cart-item-info">
+                                                        @item.Quantity x Rs. @item.UnitPrice
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            decimal tot = @item.UnitPrice * @item.Quantity;
+                                            TotalAmount += tot;
+
+                                        }
+                                    }
+
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="flex-w flex-t bor12 p-b-13">
+                    </div>
+
+
+
+                    <div class="flex-w flex-t p-t-27 p-b-33">
+                        <div class="size-208">
+                            <span class="mtext-101 cl2">
+                                Total:
+                            </span>
+                        </div>
+
+                        <div class="size-209 p-t-1">
+                            <span class="mtext-110 cl2">
+                                Rs. @TotalAmount
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+

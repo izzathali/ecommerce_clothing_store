@@ -1,0 +1,85 @@
+﻿@using Ecommerce.Model
+@model IEnumerable<UserM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+
+}
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Staff /</span> Report</h4>
+
+        <!-- Basic Bootstrap Table -->
+        <div class="card">
+            <h5 class="card-header">List of Staff</h5>
+            <div class="table-responsive text-nowrap">
+                <table id="sortuser" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.FirstName)
+                            </th>
+                            <th scope="col" >
+                                @Html.DisplayNameFor(model => model.LastName)
+                            </th>
+                            <th  scope="col" >
+                                @Html.DisplayNameFor(model => model.Username)
+                            </th>
+                            <th scope="col" >
+                                @Html.DisplayNameFor(model => model.Password)
+                            </th>
+                            <th scope="col" >
+                                @Html.DisplayNameFor(model => model.UserType)
+                            </th>
+                            <th scope="col" >
+                                @Html.DisplayNameFor(model => model.AccessLevel)
+                            </th>
+                           @* <th>
+                                @Html.DisplayNameFor(model => model.UserPrfUrl)
+                            </th>*@
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-table-header="FirstName" >
+                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                </td>
+                                <td data-table-header="LastName" >
+                                    @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                                <td data-table-header="Username" >
+                                    @Html.DisplayFor(modelItem => item.Username)
+                                </td>
+                                <td data-table-header="Password" >
+                                    @Html.DisplayFor(modelItem => item.Password)
+                                </td>
+                                <td data-table-header="UserType" >
+                                    @Html.DisplayFor(modelItem => item.UserType)
+                                </td>
+                                <td data-table-header="AccessLevel" >
+                                    @Html.DisplayFor(modelItem => item.AccessLevel)
+                                </td>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.UserPrfUrl)
+                                </td>*@
+                                <td data-table-header="UserId" >
+                                    <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> 
+                                    @*|
+                                    <a asp-action="Delete"  asp-route-id="@item.UserId">Delete</a>*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

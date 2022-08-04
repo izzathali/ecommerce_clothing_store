@@ -1,0 +1,152 @@
+﻿@using Ecommerce.Model
+@model CustomerM
+@using Ecommerce.ViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+    List<ShoppingCartVM> shoppingCarts = ViewBag.shoppingCarts as List<ShoppingCartVM>;
+
+    decimal TotalAmount = 0;
+}
+
+
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="stext-109 cl8 hov-cl1 trans-04">
+            <h5> Home </h5>
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        <h5 style="margin-left:5px;margin-right:5px;"> / </h5>
+        <a asp-area="" asp-controller="Home" asp-action="Checkout">
+            <span class="stext-109 cl4">
+                <h5> Checkout </h5>
+            </span>
+        </a>
+    </div>
+</div>
+
+
+
+<!-- Shoping Cart -->
+<form class="bg0 p-t-75 p-b-85">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+
+                <div class="bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+                    <div>
+                        <h4 class="mtext-105 cl2 txt-center p-b-30">
+                            Billing Details
+                        </h4>
+
+                        <div class="bor8 m-b-20 how-pos4-parent">
+                            <input asp-for="CustomerName" disabled class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" placeholder="Your Name" />
+                            <span class="how-pos4 pointer-none fa fa-user "> </span>
+                        </div>
+
+                        <div class="bor8 m-b-20 how-pos4-parent">
+                            <input asp-for="Email" disabled class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" placeholder="Your Email Address" />
+                            <i class="how-pos4 pointer-none fa fa-envelope fa-4" aria-hidden="true"></i>
+
+                        </div>
+
+                        <div class="bor8 m-b-20 how-pos4-parent">
+                            <input asp-for="PhoneNo1" disabled class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" placeholder="Your Contact No" />
+                            <i class="how-pos4 pointer-none fa fa-phone-square fa-4" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="bor8 m-b-20 how-pos4-parent">
+                            <input asp-for="PhoneNo2" disabled class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text"  placeholder="Your Contact No" />
+                            <i class="how-pos4 pointer-none fa fa-phone-square fa-4" aria-hidden="true"></i>
+                        </div>
+
+                         <div class="bor8 m-b-30">
+                            <textarea asp-for="DeliveryAddress" disabled class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" placeholder="Delivery Address"></textarea>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+
+                <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+                    <h4 class="mtext-109 cl2 p-b-30">
+                        Order Items (@shoppingCarts.Count)
+                    </h4>
+
+                    <div class="">
+
+
+                        <div class="cart flex-col-l p-l-25 p-r-25">
+                            <div class="header-cart-content flex-w">
+                                <ul class="header-cart-wrapitem ">
+
+                                    @if (shoppingCarts != null)
+                                    {
+                                        @foreach (var item in shoppingCarts)
+                                        {
+                                            <li class="header-cart-item flex-w flex-t m-b-12">
+                                                <div class="header-cart-item-img">
+                                                    <img src="@Url.Content("~/ProductImg/"+@item.ImagePath)" alt="IMG">
+                                                </div>
+
+                                                <div class="header-cart-item-txt p-t-8">
+                                                    <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                                                        @item.ProductName
+                                                    </a>
+
+                                                    <span class="header-cart-item-info">
+                                                        @item.Quantity x Rs. @item.UnitPrice
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            decimal tot = @item.UnitPrice * @item.Quantity;
+                                            TotalAmount += tot;
+
+                                        }
+                                    }
+
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="flex-w flex-t bor12 p-b-13">
+                    </div>
+
+
+
+                    <div class="flex-w flex-t p-t-27 p-b-33">
+                        <div class="size-208">
+                            <span class="mtext-101 cl2">
+                                Total:
+                            </span>
+                        </div>
+
+                        <div class="size-209 p-t-1">
+                            <span class="mtext-110 cl2">
+                                Rs. @TotalAmount
+                            </span>
+                        </div>
+                    </div>
+
+                    <button asp-area="" asp-action="Create" asp-controller="Order" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                        Place Your Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

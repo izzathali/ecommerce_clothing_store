@@ -1,0 +1,105 @@
+﻿@using Ecommerce.Model
+@model IEnumerable<ProductM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+
+    UserM user = ViewBag.Users as UserM;
+}
+
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product /</span> Report</h4>
+
+        <!-- Basic Bootstrap Table -->
+        <div class="card">
+            <h5 class="card-header">List of Products</h5>
+            <div class="table-responsive text-nowrap">
+                <table id="sortproduct" class="table" width="100%">
+                    <thead>
+                        <tr>
+                            <th scope="col" >
+                                @Html.DisplayNameFor(model => model.ProductCode)
+                            </th>
+                            <th scope="col" >
+                                @Html.DisplayNameFor(model => model.ProductName)
+                            </th>
+                            <th scope="col" >
+                                @Html.DisplayNameFor(model => model.ProductDescription)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.category)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.ProductPrice)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.ProductPicUrl)
+                            </th>
+
+                            @if (@user != null && !(@user.AccessLevel == "Report"))
+                            {
+                                <th scope="col"></th>
+                            }
+
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-table-header="ProductCode">
+                                    @Html.DisplayFor(modelItem => item.ProductCode)
+                                </td>
+                                <td data-table-header="ProductName">
+                                    @Html.DisplayFor(modelItem => item.ProductName)
+                                </td>
+                                <td data-table-header="ProductDescription">
+                                    @Html.DisplayFor(modelItem => item.ProductDescription)
+                                </td>
+                                <td data-table-header="CategoryName">
+                                    @Html.DisplayFor(modelItem => item.category.CategoryName)
+                                </td>
+                                <td data-table-header="ProductPrice">
+                                    @Html.DisplayFor(modelItem => item.ProductPrice)
+                                </td>
+                                <td data-table-header="ProductPicUrl">
+                                    <div class="avatar">
+                                        @if (string.IsNullOrEmpty(item.ProductPicUrl))
+                                        {
+                                            <img src="@("~/ProductImg/default.jpg")" asp-append-version="true" alt="Avatar" class="rounded-circle" />
+                                        }
+                                        else
+                                        {
+                                            <img src="@("~/ProductImg/"+ item.ProductPicUrl)" asp-append-version="true" alt="Avatar" class="rounded-circle" />
+                                        }
+                                    </div>
+                                </td>
+                                @if (@user != null && !(@user.AccessLevel == "Report"))
+                                {
+                                    <td data-table-header="ProductId" >
+                                        <a asp-action="Edit" asp-route-id="@item.ProductId"> <i class="bx bx-edit me-1"></i>Edit</a>
+
+                                        @if (!(@user.AccessLevel == "Report") && !(@user.AccessLevel == "Update"))
+                                        {
+                                            <span> | </span>
+                                            <a asp-action="Delete" asp-route-id="@item.ProductId"> <i class="bx bx-trash me-1"></i>Delete</a>
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+

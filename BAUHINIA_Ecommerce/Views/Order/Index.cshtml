@@ -1,0 +1,86 @@
+﻿@using Ecommerce.Model
+@model IEnumerable<Ecommerce.Model.OrderM>
+@{
+    ViewData["Title"] = "Requested Orders Report";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Requested Orders /</span> Report</h4>
+
+        <!-- Basic Bootstrap Table -->
+        <div class="card">
+            <h5 class="card-header">List of Requested Orders</h5>
+            <div class="table-responsive text-nowrap">
+                <table id="sortorder" class="table" width="100%" >
+                    <thead>
+                        <tr>
+                            <th scope="col" >
+                                Order No
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.OrderDate)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.customer)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.customer.DeliveryAddress)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.customer.Email)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.customer.PhoneNo1)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td data-table-header="OrderId" >
+                                    #@item.OrderId
+                                </td>
+                                <td data-table-header="OrderDate">
+                                    @item.OrderDate.ToString("yyyy/MM/dd hh:mm:ss")
+                                </td>
+                                <td data-table-header="CustomerName">
+                                    @Html.DisplayFor(modelItem => item.customer.CustomerName)
+                                </td>
+                                <td data-table-header="DeliveryAddress">
+                                    @Html.DisplayFor(modelItem => item.customer.DeliveryAddress)
+                                </td>
+                                <td data-table-header="Email">
+                                    @Html.DisplayFor(modelItem => item.customer.Email)
+                                </td>
+                                <td data-table-header="PhoneNo1">
+                                    @Html.DisplayFor(modelItem => item.customer.PhoneNo1)
+                                </td>
+                                <td>
+                                    @*<a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |*@
+                                    <a asp-action="Details" asp-route-id="@item.OrderId">
+                                        <i class="fa fa-info" aria-hidden="true"></i>
+                                        Details
+                                    </a>
+                                    @* | <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+</div>
