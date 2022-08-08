@@ -22,6 +22,6 @@ namespace Ecommerce.Data
         public DbSet<OrderM> Orders { get; set; }
         public DbSet<OrderLineItemM> OrderLineItems { get; set; }
 
-
+        public DbSet<ReviewM> Reviews { get; set; }
     }
 }
