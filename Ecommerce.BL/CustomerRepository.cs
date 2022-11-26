@@ -25,6 +25,13 @@ namespace Ecommerce.BL
 
         }
 
+        public async Task<int> AddCustomerReview(ReviewM reviewM)
+        {
+            db.Reviews.Add(reviewM);
+            return await db.SaveChangesAsync();
+
+        }
+
         public bool CustomerExists(int id)
         {
             return (db.Customers?.Any(e => e.CustomerId == id)).GetValueOrDefault();

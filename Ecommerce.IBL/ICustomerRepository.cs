@@ -13,6 +13,7 @@ namespace Ecommerce.IBL
         Task<CustomerM> GetCustomerByCustomerId(int? CustomerId);
         Task<CustomerM> GetCustomerByEmailAndPassword(CustomerM customerM);
         Task<int> AddCustomer(CustomerM customerM);
+        Task<int> AddCustomerReview(ReviewM reviewM);
         Task<int> UpdateCustomer(CustomerM customerM);
         Task DeleteCustomer(int customerId);
 
